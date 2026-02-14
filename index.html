@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lopyuu</title>
+
+<!-- Google Fonts: Patrick Hand -->
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#F7B3D8;
+}
+
+/* FRAME RESPONSIVE */
+.frame{
+  width:min(360px,80vw);
+  aspect-ratio:9/16;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+}
+
+/* WRAPPER AMPlOP */
+.envelope-wrapper{
+  position:relative;
+  width:260px;
+  height:160px;
+  z-index:2; /* amplop di bawah kertas */
+}
+
+/* BODY AMPlOP */
+.envelope-body{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:100%;
+  background:#FF4FB8;
+  border-radius:0 0 20px 20px;
+  overflow:hidden;
+}
+
+/* SEGITIGA BACKGROUND DALAM */
+.triangle-back{
+  position:absolute;
+  top:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:0;
+  height:0;
+  border-left:130px solid transparent;
+  border-right:130px solid transparent;
+  border-top:90px solid #FF7FCC;
+  z-index:1;
+}
+
+/* FLAP (DI LUAR BODY) */
+.flap{
+  position:absolute;
+  top:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:0;
+  height:0;
+  border-left:130px solid transparent;
+  border-right:130px solid transparent;
+  border-top:90px solid #FF3AAE;
+  transform-origin:top center;
+  transition:transform 0.6s ease;
+  z-index:3;
+  cursor:pointer;
+}
+
+/* OPEN STATE FLAP */
+.envelope-wrapper.open .flap{
+  transform:
+    translateX(-50%)
+    rotateX(180deg);
+}
+
+/* KERTAS DI ATAS AMPlOP */
+.paper-container{
+  position:absolute;
+  top:0;
+  left:50%;
+  transform:translateX(-50%) translateY(30px); /* mulai dari bawah flap */
+  width:90%;
+  z-index:4; /* di atas amplop */
+  display:flex;
+  justify-content:center;
+}
+
+/* KERTAS FLEXIBLE DENGAN ANIMASI */
+.paper-small{
+  background:#fff;
+  padding:15px 20px;
+  border-radius:12px;
+  font-family:'Patrick Hand', cursive;
+  font-size:20px;
+  line-height:1.5;
+  text-align:center;
+  box-shadow:0 6px 20px rgba(0,0,0,0.2);
+  max-width:100%;
+  word-wrap: break-word;
+
+  /* Awal posisi & opacity */
+  opacity:0;
+  transform:translateY(50px);
+  transition:all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* KERTAS MUNCUL: NAIK KE ATAS DAN OPACITY 1 */
+.envelope-wrapper.open ~ .paper-container .paper-small{
+  opacity:1;
+  transform:translateY(0);
+}
+</style>
+</head>
+
+<body>
+
+<div class="frame">
+  <!-- AMPlOP -->
+  <div class="envelope-wrapper" id="wrapper">
+
+    <!-- FLAP DI LUAR -->
+    <div class="flap"></div>
+
+    <!-- BODY AMPlOP -->
+    <div class="envelope-body">
+      <div class="triangle-back"></div>
+    </div>
+
+  </div>
+
+  <!-- KERTAS DI ATAS AMPlOP -->
+  <div class="paper-container">
+    <div class="paper-small" id="paper">
+      Selamat Hari Valentine, Sayang! <br>
+      Maaf cuma bisa lewat web ini, belum bisa kasih hadiah langsung. <br>
+      I Love You 💖
+    </div>
+  </div>
+</div>
+
+<script>
+const wrapper = document.getElementById("wrapper");
+
+// Toggle open envelope
+wrapper.addEventListener("click",()=>{
+  wrapper.classList.toggle("open");
+});
+</script>
+
+</body>
+</html>
